@@ -19,6 +19,7 @@ import Transfer from './Transfer';
 import Faucet from './Faucet';
 import Upgrade from './Upgrade';
 import Withdrawal from './Withdrawal';
+import SetAddress from './SetAddress';
 
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -81,6 +82,7 @@ function Main () {
             <TemplateModule accountPair={accountPair} />
             <Faucet accountPair={accountPair} />
             <Withdrawal accountPair={accountPair} />
+            <SetAddress accountPair={accountPair} />
           </Grid.Row>
         </Grid>
       </Container>

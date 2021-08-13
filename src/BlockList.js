@@ -9,9 +9,19 @@ export default function Main (props) {
   const accounts = keyring.getPairs();
   const [balances, setBalances] = useState({});
   const { accountPair } = props
-  accountPair && api.query.tcpModule.doubleVl1LastBlock.entries('5EeKD2EycB1vRVJPgukBgsLe2zLLcaXhbYVyqrf45gjX1KPQ', LastBlock =>{
-    console.log(LastBlock[0].toString(),"123")
-  })
+  const {lastBlocks ,setLastBlocks}= useState([])
+  //5EeKD2EycB1vRVJPgukBgsLe2zLLcaXhbYVyqrf45gjX1KPQ
+  useEffect(() => {
+   let unsubscribeAll = null
+  accountPair && api.query.tcpModule.doubleVl1LastBlock.entries(accountPair.address, lastBlockRes =>{
+    if(lastBlockRes[0]){
+      setLastBlocks(lastBlockRes[0]);
+    }
+  }).then(unsub => {
+      unsubscribeAll = unsub[0];
+    }).catch(console.error);
+    return () => unsubscribeAll && unsubscribeAll();
+  },[api,accountPair,setLastBlocks]);
   useEffect(() => {
     const addresses = keyring.getPairs().map(account => account.address);
     let unsubscribeAll = null;

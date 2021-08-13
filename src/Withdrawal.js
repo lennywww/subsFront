@@ -21,10 +21,10 @@ export default function Main (props) {
     accountPair&&   api.tx.tcpModule.withdraw(500*1000)
     .signAndSend(accountPair)
     .then(witResult =>{
-        console.log(witResult.toHuman())
+        setHint(witResult.toHuman())
     })
     .catch(error=>{
-    console.log(error.toHuman())
+      setHint(error.toHuman())
     });
     // 发送 POST 请求
     // axios({

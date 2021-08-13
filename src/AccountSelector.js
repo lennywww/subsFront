@@ -83,20 +83,24 @@ function Main (props) {
         </Menu.Menu>
         <Menu.Menu position='right' style={{ alignItems: 'center' }}>
           { !accountSelected
-            ? <span>
-              {hint}
-              <Button basic    style={{ marginLeft: 0, marginTop: '.5em' }}  onClick={ newUser } >
-              创建新地址
-           </Button>
-            </span>
-            : null }
-          <CopyToClipboard text={accountSelected}>
-            <Button
-              basic
-              circular
-              size='large'
-              icon='user'
-              color={accountSelected ? 'green' : 'red'}
+           ? <span>
+           Add your account with the{' '}
+           <a
+             target='_blank'
+             rel='noopener noreferrer'
+             href='https://github.com/polkadot-js/extension'
+           >
+             Polkadot JS Extension
+           </a>
+         </span>
+         : null }
+       <CopyToClipboard text={accountSelected}>
+         <Button
+           basic
+           circular
+           size='large'
+           icon='user'
+           color={accountSelected ? 'green' : 'red'}
             />
           </CopyToClipboard>
           <Dropdown
@@ -110,7 +114,6 @@ function Main (props) {
             }}
             value={accountSelected}
           />
-          
           <BalanceAnnotation accountSelected={accountSelected} />
           <BalanceAnnotationss accountSelected={accountSelected} />
         </Menu.Menu>
