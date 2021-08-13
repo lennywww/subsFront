@@ -1,37 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Statistic, Grid, Card, Icon } from 'semantic-ui-react';
-
 import { useSubstrate } from './substrate-lib';
 
 function Main (props) {
   const { api } = useSubstrate();
-  const { finalized } = props;
-  const [blockNumber, setBlockNumber] = useState(0);
+  const [ mododule, setMododule] = useState(0);
   const [blockNumberTimer, setBlockNumberTimer] = useState(0);
-
-  const bestNumber = finalized
-    ? api.derive.chain.bestNumberFinalized
-    : api.derive.chain.bestNumber;
-
-  useEffect(() => {
-    let unsubscribeAll = null;
-
-    bestNumber(number => {
-      setBlockNumber(number.toNumber());
+  const { accountPair} =props;
+    accountPair &&
+    api.query.tcpModule.vl1Generation(accountPair.address, number => {
+      setMododule(number.toHuman());
       setBlockNumberTimer(0);
-    })
-      .then(unsub => {
-        unsubscribeAll = unsub;
-      })
-      .catch(console.error);
-
-    return () => unsubscribeAll && unsubscribeAll();
-  }, [bestNumber]);
-
+      }).catch(console.error);
   const timer = () => {
     setBlockNumberTimer(time => time + 1);
   };
-
   useEffect(() => {
     const id = setInterval(timer, 1000);
     return () => clearInterval(id);
@@ -41,8 +24,8 @@ function Main (props) {
       <Card>
         <Card.Content textAlign='center'>
           <Statistic
-            label={(finalized ? 'Finalized' : 'Current') + ' Block'}
-            value={blockNumber}
+            label={'爆块数'}
+            value={mododule}
           />
         </Card.Content>
         <Card.Content extra>
@@ -53,9 +36,9 @@ function Main (props) {
   );
 }
 
-export default function BlockNumber (props) {
-  const { api } = useSubstrate();
-  return api.derive &&
+export default function TcpModule (props) {
+  const { api ,keyring} = useSubstrate();
+  return  keyring.getPairs && api.derive &&
     api.derive.chain &&
     api.derive.chain.bestNumber &&
     api.derive.chain.bestNumberFinalized

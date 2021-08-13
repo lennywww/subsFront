@@ -7,14 +7,18 @@ import { DeveloperConsole } from './substrate-lib/components';
 
 import AccountSelector from './AccountSelector';
 import Balances from './Balances';
+import BlockList from './BlockList';
 import BlockNumber from './BlockNumber';
+import TcpModule from './TcpModule';
 import Events from './Events';
 import Interactor from './Interactor';
 import Metadata from './Metadata';
 import NodeInfo from './NodeInfo';
 import TemplateModule from './TemplateModule';
 import Transfer from './Transfer';
+import Faucet from './Faucet';
 import Upgrade from './Upgrade';
+import Withdrawal from './Withdrawal';
 
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -23,12 +27,10 @@ function Main () {
     accountAddress &&
     keyringState === 'READY' &&
     keyring.getPair(accountAddress);
-
   const loader = text =>
     <Dimmer active>
       <Loader size='small'>{text}</Loader>
     </Dimmer>;
-
   const message = err =>
     <Grid centered columns={2} padded>
       <Grid.Column>
@@ -47,7 +49,6 @@ function Main () {
   }
 
   const contextRef = createRef();
-
   return (
     <div ref={contextRef}>
       <Sticky context={contextRef}>
@@ -60,9 +61,13 @@ function Main () {
             <Metadata />
             <BlockNumber />
             <BlockNumber finalized />
+            <TcpModule  accountPair={accountPair}/>
           </Grid.Row>
           <Grid.Row stretched>
             <Balances />
+          </Grid.Row>
+          <Grid.Row stretched>
+            <BlockList accountPair={accountPair} />
           </Grid.Row>
           <Grid.Row>
             <Transfer accountPair={accountPair} />
@@ -74,6 +79,8 @@ function Main () {
           </Grid.Row>
           <Grid.Row>
             <TemplateModule accountPair={accountPair} />
+            <Faucet accountPair={accountPair} />
+            <Withdrawal accountPair={accountPair} />
           </Grid.Row>
         </Grid>
       </Container>

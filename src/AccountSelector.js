@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import { isWeb3Injected} from '@polkadot/extension-dapp';
+import { 
+  mnemonicGenerate,
+  mnemonicToMiniSecret,
+  mnemonicValidate,
+  naclKeypairFromSeed} from'@polkadot/util-crypto';
 import {
   Menu,
   Button,
@@ -17,7 +22,7 @@ function Main (props) {
   const { keyring } = useSubstrate();
   const { setAccountAddress } = props;
   const [accountSelected, setAccountSelected] = useState('');
-
+  const [hint, setHint] = useState();
   // Get the list of accounts we possess the private key for
   const keyringOptions = keyring.getPairs().map(account => ({
     key: account.address,
@@ -25,22 +30,42 @@ function Main (props) {
     text: account.meta.name.toUpperCase(),
     icon: 'user'
   }));
-
   const initialAddress =
     keyringOptions.length > 0 ? keyringOptions[0].value : '';
-
   // Set the initial address
   useEffect(() => {
     setAccountAddress(initialAddress);
     setAccountSelected(initialAddress);
   }, [setAccountAddress, initialAddress]);
-
-  const onChange = address => {
+    const onChange = address => {
     // Update state with new account address
     setAccountAddress(address);
     setAccountSelected(address);
   };
+  function newUser(){
+    if(isWeb3Injected){
+    // Create mnemonic string for Alice using BIP39
+    const mnemonicAlice = mnemonicGenerate();
 
+    console.log(`Generated mnemonic: ${mnemonicAlice}`);
+
+    // Validate the mnemic string that was generated
+    const isValidMnemonic = mnemonicValidate(mnemonicAlice);
+
+    console.log(`isValidMnemonic: ${isValidMnemonic}`);
+
+    // Create valid Substrate-compatible seed from mnemonic
+    const seedAlice = mnemonicToMiniSecret(mnemonicAlice);
+
+    // Generate new public/secret keypair for Alice from the supplied seed
+    const { publicKey, secretKey } = naclKeypairFromSeed(seedAlice);
+    console.log(publicKey,secretKey)
+    
+    }else{
+      setHint('请到应用商店下载');
+    }
+    setTimeout(() => {  setHint('')  }, 3000);
+  }
   return (
     <Menu
       attached='top'
@@ -59,14 +84,10 @@ function Main (props) {
         <Menu.Menu position='right' style={{ alignItems: 'center' }}>
           { !accountSelected
             ? <span>
-              Add your account with the{' '}
-              <a
-                target='_blank'
-                rel='noopener noreferrer'
-                href='https://github.com/polkadot-js/extension'
-              >
-                Polkadot JS Extension
-              </a>
+              {hint}
+              <Button basic    style={{ marginLeft: 0, marginTop: '.5em' }}  onClick={ newUser } >
+              创建新地址
+           </Button>
             </span>
             : null }
           <CopyToClipboard text={accountSelected}>
@@ -89,7 +110,9 @@ function Main (props) {
             }}
             value={accountSelected}
           />
+          
           <BalanceAnnotation accountSelected={accountSelected} />
+          <BalanceAnnotationss accountSelected={accountSelected} />
         </Menu.Menu>
       </Container>
     </Menu>
@@ -100,7 +123,6 @@ function BalanceAnnotation (props) {
   const { accountSelected } = props;
   const { api } = useSubstrate();
   const [accountBalance, setAccountBalance] = useState(0);
-
   // When account address changes, update subscriptions
   useEffect(() => {
     let unsubscribe;
@@ -125,6 +147,36 @@ function BalanceAnnotation (props) {
       </Label>
     : null;
 }
+
+
+function BalanceAnnotationss (props) {
+  const { accountSelected } = props;
+  const { api } = useSubstrate();
+  const [accountBalance, setAccountBalance] = useState(0);
+  // When account address changes, update subscriptions
+  useEffect(() => {
+    let unsubscribe;
+
+    // If the user has selected an address, create a new subscription
+    accountSelected &&
+    api.query.tcpModule.vl1Generation(accountSelected, balance => {
+        setAccountBalance(balance.toHuman());
+      }).then(unsub => {
+          unsubscribe = unsub;
+        }).catch(console.error);
+
+    return () => unsubscribe && unsubscribe();
+  }, [api, accountSelected]);
+
+  return accountSelected
+    ? <Label pointing='left'>
+        <Icon name='money' color='green' />
+        {accountBalance}
+      </Label>
+    : null;
+}
+
+
 
 export default function AccountSelector (props) {
   const { api, keyring } = useSubstrate();

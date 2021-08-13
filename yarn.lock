@@ -4008,6 +4008,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^0.21.1":
+  version: 0.21.1
+  resolution: "axios@npm:0.21.1"
+  dependencies:
+    follow-redirects: ^1.10.0
+  checksum: 864fb7b5d077d236737f10adca53bf451a93f35a15271f56fba8da07265a02d26b7d881b935a6697dc6adb0549ea3e56d2eecb403edaa3bb78f6479901c10f69
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^2.2.0":
   version: 2.2.0
   resolution: "axobject-query@npm:2.2.0"
@@ -4890,7 +4899,7 @@ __metadata:
     bn.js: ^5.1.1
     elliptic: ^6.4.1
     hash.js: ^1.1.7
-  checksum: 65cc1f5610ff8150a310d4089c799af535cd87cc3aee526abc0b586b003055c1f9668957a60c770290120e1b9e9c42e8758db15fb2712a10c9cedeb1203f2898
+  checksum: f43b8c10718e2e315fb54ed7e811e7385577a5594947a3ae9e2d3caf8ca26bf223b5bc96f56dd6751a3ceef0cd95965baff910a047114a558ba2ac060f399e17
   languageName: node
   linkType: hard
 
@@ -8228,7 +8237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.10.0":
   version: 1.14.1
   resolution: "follow-redirects@npm:1.14.1"
   peerDependenciesMeta:
@@ -15778,6 +15787,7 @@ resolve@^2.0.0-next.3:
     "@polkadot/ui-settings": ^0.82.1
     "@polkadot/util": ^6.10.1
     "@polkadot/util-crypto": ^6.10.1
+    axios: ^0.21.1
     babel-preset-env: ^1.7.0
     eslint: ^7.20.0
     eslint-config-semistandard: ^15.0.1
