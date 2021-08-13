@@ -15,6 +15,7 @@
     "deploy": "gh-pages -d build -m '[ci skip] Updates'"
   },
   "dependencies": {
+    "@ethersproject/providers": "^5.4.3",
     "@polkadot/api": "^4.16.2",
     "@polkadot/extension-dapp": "^0.38.7",
     "@polkadot/keyring": "^6.10.1",
@@ -24,7 +25,10 @@
     "@polkadot/ui-settings": "^0.82.1",
     "@polkadot/util": "^6.10.1",
     "@polkadot/util-crypto": "^6.10.1",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
     "axios": "^0.21.1",
+    "ethers": "^5.4.4",
     "prop-types": "^15.7.2",
     "query-string": "^6.13.5",
     "react": "^16.14.0",

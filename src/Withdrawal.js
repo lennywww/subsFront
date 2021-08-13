@@ -1,6 +1,5 @@
 import React,{  useState }  from 'react';
-import { Form,  Grid , Label, Icon} from 'semantic-ui-react';
-import { Button } from 'semantic-ui-react';
+import { Form,  Grid , Label, Button} from 'semantic-ui-react';
 //import axios from 'axios';
 
 export default function Main (props) {
@@ -18,7 +17,7 @@ export default function Main (props) {
   }).catch(console.log);
   function withdrawalButton(){
     
-    accountPair&&   api.tx.tcpModule.withdraw(500*1000)
+    accountPair&&api.tx.tcpModule.withdraw(500*1000)
     .signAndSend(accountPair)
     .then(witResult =>{
         setHint(witResult.toHuman())

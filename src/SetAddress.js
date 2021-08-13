@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Grid, Label, Icon } from 'semantic-ui-react';
+import { Form, Input, Grid } from 'semantic-ui-react';
 import { Button } from 'semantic-ui-react';
 
 export default function Main (props) {

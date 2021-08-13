@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { isWeb3Injected} from '@polkadot/extension-dapp';
-import { 
-  mnemonicGenerate,
-  mnemonicToMiniSecret,
-  mnemonicValidate,
-  naclKeypairFromSeed} from'@polkadot/util-crypto';
+import { isWeb3Injected,web3Accounts} from '@polkadot/extension-dapp';
 import {
   Menu,
   Button,
@@ -23,15 +18,31 @@ function Main (props) {
   const { setAccountAddress } = props;
   const [accountSelected, setAccountSelected] = useState('');
   const [hint, setHint] = useState();
-  // Get the list of accounts we possess the private key for
+  // const [keyringOptionss,setKeyringOptions]= useState();
+  const arras = [];
+  useEffect(() => {
+  web3Accounts()
+    .then(accounts=>{
+      accounts.forEach(account => {
+        const vObj ={
+          key: account.address,
+          value: account.address,
+          text: account.meta.name.toUpperCase(),
+          icon: 'user'
+       }
+       arras.push(vObj)
+    });
+  });
+  },[arras]);
   const keyringOptions = keyring.getPairs().map(account => ({
     key: account.address,
     value: account.address,
     text: account.meta.name.toUpperCase(),
     icon: 'user'
   }));
+  
   const initialAddress =
-    keyringOptions.length > 0 ? keyringOptions[0].value : '';
+  arras.length > 0 ? arras[0].value : '';
   // Set the initial address
   useEffect(() => {
     setAccountAddress(initialAddress);
@@ -44,23 +55,6 @@ function Main (props) {
   };
   function newUser(){
     if(isWeb3Injected){
-    // Create mnemonic string for Alice using BIP39
-    const mnemonicAlice = mnemonicGenerate();
-
-    console.log(`Generated mnemonic: ${mnemonicAlice}`);
-
-    // Validate the mnemic string that was generated
-    const isValidMnemonic = mnemonicValidate(mnemonicAlice);
-
-    console.log(`isValidMnemonic: ${isValidMnemonic}`);
-
-    // Create valid Substrate-compatible seed from mnemonic
-    const seedAlice = mnemonicToMiniSecret(mnemonicAlice);
-
-    // Generate new public/secret keypair for Alice from the supplied seed
-    const { publicKey, secretKey } = naclKeypairFromSeed(seedAlice);
-    console.log(publicKey,secretKey)
-    
     }else{
       setHint('请到应用商店下载');
     }
@@ -108,7 +102,7 @@ function Main (props) {
             selection
             clearable
             placeholder='Select an account'
-            options={keyringOptions}
+            options={arras}
             onChange={(_, dropdown) => {
               onChange(dropdown.value);
             }}

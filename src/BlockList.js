@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Grid, Button } from 'semantic-ui-react';
+import { Table, Grid } from 'semantic-ui-react';
 
 //import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useSubstrate } from './substrate-lib';
-
 export default function Main (props) {
   const { api, keyring } = useSubstrate();
   const accounts = keyring.getPairs();
   const [balances, setBalances] = useState({});
   const { accountPair } = props
-  const {lastBlocks ,setLastBlocks}= useState([])
-  //5EeKD2EycB1vRVJPgukBgsLe2zLLcaXhbYVyqrf45gjX1KPQ
-  useEffect(() => {
-   let unsubscribeAll = null
-  accountPair && api.query.tcpModule.doubleVl1LastBlock.entries(accountPair.address, lastBlockRes =>{
-    if(lastBlockRes[0]){
-      setLastBlocks(lastBlockRes[0]);
-    }
-  }).then(unsub => {
-      unsubscribeAll = unsub[0];
-    }).catch(console.error);
-    return () => unsubscribeAll && unsubscribeAll();
-  },[api,accountPair,setLastBlocks]);
+
   useEffect(() => {
     const addresses = keyring.getPairs().map(account => account.address);
     let unsubscribeAll = null;
@@ -78,8 +65,34 @@ export default function Main (props) {
               }</Table.Cell>
             </Table.Row>
           )}
+          {/* <TabaleRows accountPair={accountPair} /> */}
         </Table.Body>
       </Table>
     </Grid.Column>
   );
+}
+
+async function TabaleRows(props){
+  const {accountPair} = props;
+  const { api } = useSubstrate();
+  const [lastBlocks,setLastBlocks]= useState([]);
+  //5EeKD2EycB1vRVJPgukBgsLe2zLLcaXhbYVyqrf45gjX1KPQ
+  useEffect(() => {
+    let unsubscribeAll = null
+   accountPair && api.query.tcpModule.doubleVl1LastBlock.entries("5EeKD2EycB1vRVJPgukBgsLe2zLLcaXhbYVyqrf45gjX1KPQ", lastBlockRes =>{
+     if(lastBlockRes[0]){
+       setLastBlocks(lastBlockRes[0]);
+     }
+   }).then(unsub => {
+       unsubscribeAll = unsub[0];
+     }).catch(console.error);
+     return () => unsubscribeAll && unsubscribeAll();
+   },[api,accountPair,setLastBlocks]);
+
+  return (
+    <Table.Row>
+    <Table.Cell width={3}>{lastBlocks}</Table.Cell>
+  </Table.Row>
+  )
+  
 }

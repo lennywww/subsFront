@@ -20,7 +20,7 @@ import Faucet from './Faucet';
 import Upgrade from './Upgrade';
 import Withdrawal from './Withdrawal';
 import SetAddress from './SetAddress';
-
+import BinanceAccount from './BinanceAccount';
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
@@ -83,6 +83,7 @@ function Main () {
             <Faucet accountPair={accountPair} />
             <Withdrawal accountPair={accountPair} />
             <SetAddress accountPair={accountPair} />
+            <BinanceAccount accountPair={accountPair} />
           </Grid.Row>
         </Grid>
       </Container>
