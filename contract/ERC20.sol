@@ -453,7 +453,6 @@ contract ERC20 is IERC20 {
         _approve(account, msg.sender, _allowances[account][msg.sender].sub(amount));
     }
 }
-
 /**
  * @title SimpleToken
  * @dev Very simple ERC20 Token example, where all tokens are pre-assigned to the creator.
