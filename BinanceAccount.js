@@ -43,7 +43,7 @@ export default function Main() {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
         <Grid.Column>
-      <h1>币安链</h1>
+      <h1>火币链</h1>
       <Card centered>
         <Card.Content textAlign='center'>
           <Statistic
@@ -103,7 +103,7 @@ function ConnectChain(props) {
         "type": "function"
         }
       ]
-  let contractAddress = "0xC11086f11DB75B65d4855A141bdA3d8F8ad424AF";
+  let contractAddress = "0x546708449c06db7aD1b04bd7bCA6f3878f459D7D";
   
   let contract = new ethers.Contract(contractAddress, abi, provider);
  
