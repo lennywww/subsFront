@@ -3,29 +3,6 @@
   [
     {
       "constant": false,
-      "inputs": [],
-      "name": "confirmAdmin",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "pledgeBalance",
-          "type": "uint256"
-        }
-      ],
-      "name": "pledgeToken",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "constant": false,
       "inputs": [
         {
           "name": "orderId",
@@ -39,38 +16,13 @@
       "type": "function"
     },
     {
-      "inputs": [
-        {
-          "name": "quaAddress",
-          "type": "address"
-        }
-      ],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "newAdmin",
-          "type": "address"
-        }
-      ],
-      "name": "updateAdmin",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
-      "name": "admin",
+      "name": "three_months",
       "outputs": [
         {
           "name": "",
-          "type": "address"
+          "type": "uint256"
         }
       ],
       "payable": false,
@@ -90,6 +42,25 @@
         {
           "name": "",
           "type": "uint256[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "uint256"
+        }
+      ],
+      "name": "releaseBalance",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
         }
       ],
       "payable": false,
@@ -143,14 +114,22 @@
       "constant": true,
       "inputs": [
         {
-          "name": "orderId",
-          "type": "uint256"
+          "name": "",
+          "type": "address"
         }
       ],
-      "name": "releaseBalance",
+      "name": "users",
       "outputs": [
         {
-          "name": "",
+          "name": "totalBalnaces",
+          "type": "uint256"
+        },
+        {
+          "name": "totalConfirmAmount",
+          "type": "uint256"
+        },
+        {
+          "name": "totalReleaseBalance",
           "type": "uint256"
         }
       ],
@@ -159,17 +138,31 @@
       "type": "function"
     },
     {
-      "constant": true,
-      "inputs": [],
-      "name": "three_months",
-      "outputs": [
+      "constant": false,
+      "inputs": [
         {
-          "name": "",
+          "name": "pledgeBalance",
           "type": "uint256"
         }
       ],
+      "name": "pledgeToken",
+      "outputs": [],
       "payable": false,
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newAdmin",
+          "type": "address"
+        }
+      ],
+      "name": "updateAdmin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -185,6 +178,40 @@
       "payable": false,
       "stateMutability": "view",
       "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "confirmAdmin",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "admin",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "quaAddress",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
     }
   ]
 }

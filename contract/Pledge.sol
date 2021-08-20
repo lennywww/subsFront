@@ -269,6 +269,14 @@ contract Pledge{
         uint256 [] orderList;
     }
 
+    struct User{
+        uint256 totalBalnaces;
+        uint256 totalConfirmAmount;
+        uint256 totalReleaseBalance;
+    }
+
+    mapping(address => User ) public users;
+
     function releaseBalance(uint256 orderId) public view returns(uint256){
         Order memory order = orders[orderId];
         if(order.user==address(0)){
@@ -281,7 +289,7 @@ contract Pledge{
             return order.balance;
         }
         if(block.timestamp>order.threeMonthsAfter){
-            return ((order.expirationTime.sub(block.timestamp)).mul(order.hundredth)).add(order.balance.div(2));
+            return ((block.timestamp.sub(order.threeMonthsAfter)).mul(order.hundredth)).add(order.balance.div(2));
         }
     }
 
@@ -320,7 +328,11 @@ contract Pledge{
         orders[orderId].expirationTime = timestamps.add(three_months).add( 100 days);
         orders[orderId].hundredth = pledgeBalance.div(2).div(100 days);
         orders[orderId].user= msg.sender;
+        orders[orderId].balance = pledgeBalance;
         userOrders[msg.sender].orderList.push(orderId);
+        users[msg.sender].totalBalnaces = users[msg.sender].totalBalnaces.add(pledgeBalance);
+        users[ msg.sender].totalReleaseBalance = users[msg.sender].totalBalnaces.sub(users[msg.sender].totalConfirmAmount);
+
     }
     function receiveAward(uint256 orderId) public{
         Order storage order  = orders[orderId];
@@ -332,5 +344,7 @@ contract Pledge{
         uint256 balance = orderReceiveAward.sub(order.confirmAmount);
         require(qua.transfer(order.user,balance));
         order.confirmAmount = orderReceiveAward;
+        users[ order.user].totalConfirmAmount = users[ order.user].totalConfirmAmount.add(orderReceiveAward);
+        users[ order.user].totalReleaseBalance = users[ order.user].totalReleaseBalance.sub(orderReceiveAward);
     }
 }
