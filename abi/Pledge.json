@@ -2,20 +2,6 @@
   "abi":
   [
     {
-      "constant": false,
-      "inputs": [
-        {
-          "name": "orderId",
-          "type": "uint256"
-        }
-      ],
-      "name": "receiveAward",
-      "outputs": [],
-      "payable": false,
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "constant": true,
       "inputs": [],
       "name": "three_months",
@@ -146,6 +132,24 @@
         }
       ],
       "name": "pledgeToken",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "orderId",
+          "type": "uint256"
+        },
+        {
+          "name": "balanceReceive",
+          "type": "uint256"
+        }
+      ],
+      "name": "receiveAward",
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
